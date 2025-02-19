@@ -9,7 +9,7 @@ import css from './styles.module.css';
 export const MainPage: React.FC = () => {
   const getEventsList = async () => {
     const events = await getVideoEvents();
-    console.log('first', events);
+    console.log('events', events);
   }
 
   useEffect(() => {

@@ -1,7 +1,33 @@
-import React from 'react';
+import React, { useRef } from 'react';
+
+import css from './styles.module.css';
+
+const VIDEO_URL_SRC = 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4';
+const VIDEO_PLAYER_WIDTH = 1280;
+const VIDEO_PLAYER_HEIGHT = 720;
 
 export const Player: React.FC = () => {
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+
+  const handleVideoClick = () => {
+    if (!videoRef.current) return;
+    if (videoRef.current.paused) {
+      videoRef.current.play();
+    } else {
+      videoRef.current.pause();
+    }
+  };
+
   return (
-    <div>Player</div>
+    <div className={css.playerContainer}>
+      <video
+        onAuxClickCapture={handleVideoClick}
+        height={VIDEO_PLAYER_HEIGHT}
+        width={VIDEO_PLAYER_WIDTH}
+        src={VIDEO_URL_SRC}
+        controls={true}
+        ref={videoRef}
+      />
+    </div>
   )
 }
