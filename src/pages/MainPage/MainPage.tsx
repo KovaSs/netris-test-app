@@ -12,7 +12,7 @@ import css from './styles.module.css';
 export const MainPage: React.FC = () => {
   const getEvents = useReduxActions(getEventsAsyncThunk);
 
-  const { list: events, loadStatus } = useSelector(EventsSelectors.getEvents);
+  const { list: events, loadStatus } = useSelector(EventsSelectors.getEventsState);
 
   useEffect(() => {
     getEvents();

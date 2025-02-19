@@ -1,6 +1,8 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
+import { useSelector } from "react-redux";
 
-import type { Event } from 'store/events';
+import type { EventTypes } from 'store/events';
+import { PlayerSelectors } from 'store/player';
 
 import css from './styles.module.css';
 
@@ -9,11 +11,19 @@ const VIDEO_PLAYER_WIDTH = 1280;
 const VIDEO_PLAYER_HEIGHT = 720;
 
 interface Props {
-  events: Event[];
+  events: EventTypes.Event[];
 };
 
 export const Player: React.FC<Props> = () => {
   const videoRef = useRef<HTMLVideoElement | null>(null);
+
+  const playerCurrentTime = useSelector(PlayerSelectors.getPlayerCurrentTime);
+
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.currentTime = playerCurrentTime;
+    }
+  }, [playerCurrentTime]);
 
   const handleVideoClick = () => {
     if (!videoRef.current) return;

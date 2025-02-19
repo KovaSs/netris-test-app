@@ -1,10 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 
-import { eventsReducer } from "./events";
+import {  moduleName as eventsModuleName, eventsReducer } from "./events";
+import { moduleName as playerModuleName, playerReducer } from "./player";
 
 export const store = configureStore({
   reducer: {
-    events: eventsReducer,
+    [playerModuleName]: playerReducer,
+    [eventsModuleName]: eventsReducer,
   },
 });
 
