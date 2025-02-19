@@ -1,31 +1,39 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
+import { getEventsAsyncThunk, EventsSelectors } from 'store/events';
 import { EventsList } from 'components/EventsList';
-import { getEventsAsyncThunk } from 'store/events';
-import { AppDispatch, RootState } from 'store';
+import { useReduxActions } from 'store/utils';
 import { Player } from 'components/Player';
 
 import css from './styles.module.css';
 
 export const MainPage: React.FC = () => {
-  const dispatch = useDispatch<AppDispatch>();
+  const getEvents = useReduxActions(getEventsAsyncThunk);
 
-  const { events, pending: isLoading } = useSelector((state: RootState) => ({
-    pending: state.events.pending,
-    events: state.events.list,
-  }));
+  const { list: events, pending: isLoading } = useSelector(EventsSelectors.getEvents);
 
   useEffect(() => {
-    dispatch(getEventsAsyncThunk());
-  }, [dispatch]);
+    getEvents();
+    /* eslint-disable-next-line react-hooks/exhaustive-deps */
+  }, []);
 
-  if (isLoading) return <div>Loading...</div>;
+
+  const renderContent = () => {
+    if (isLoading) return <div>Loading...</div>;
+
+    return (
+      <div className={css.mediaContainer}>
+        <Player events={events} />
+        <EventsList events={events} />
+      </div>
+    );
+  }
+
 
   return (
     <div className={css.main}>
-      <Player events={events} />
-      <EventsList />
+      {renderContent()}
     </div>
   )
 }

@@ -4,17 +4,17 @@ import { getVideoEvents } from "api";
 
 import { Event, EventsState } from "./types";
 
-const sliceName = "events";
+export const moduleName = "events";
 
 const initialState: EventsState = {
   pending: false,
   list: [],
 };
 
-export const getEventsAsyncThunk = createAsyncThunk(`${sliceName}/getEventsList`, getVideoEvents);
+export const getEventsAsyncThunk = createAsyncThunk(`${moduleName}/getEventsList`, getVideoEvents);
 
 const authSlice = createSlice({
-  name: sliceName,
+  name: moduleName,
   initialState,
   reducers: {},
   extraReducers: (builder) => {

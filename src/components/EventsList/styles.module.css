@@ -1,0 +1,9 @@
+.eventsContainer {
+  flex-wrap: wrap;
+  display: flex;
+  gap: 8px;
+}
+
+.eventItem {
+  cursor: pointer;
+}
