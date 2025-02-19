@@ -19,18 +19,26 @@ export const EventsList: React.FC<Props> = ({ events }) => {
     setCurrentTime(timestamp);
   };
 
-  return (
-    <section>
-      <h2>Список событий:</h2>
-      <div className={css.eventsContainer}>
+  const renderEventsList = () => {
+    if (!events.length) return <div>Событий нет</div>;
+
+    return (
+      <div className={css.eventsContainer} data-testid="events-list-container">
         {events.map((event) => (
-          <EventItem 
+          <EventItem
             timestamp={event.timestamp}
             onClick={onEventClick}
             key={event.timestamp} 
           />
         ))}
       </div>
+    )
+  }
+
+  return (
+    <section>
+      <h2>Список событий:</h2>
+      {renderEventsList()}
     </section>
   )
 }
