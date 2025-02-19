@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useCallback, useState } from 'react';
 import { useSelector } from "react-redux";
 
 import type { EventTypes } from 'store/events';
@@ -14,16 +14,33 @@ interface Props {
   events: EventTypes.Event[];
 };
 
-export const Player: React.FC<Props> = () => {
+export const Player: React.FC<Props> = ({ events }) => {
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
   const playerCurrentTime = useSelector(PlayerSelectors.getPlayerCurrentTime);
 
+  const [displayedEvents, setDisplayedEvents] = useState<EventTypes.Event[]>([]);
+
+  const onTimeUpdate = useCallback(() => {
+    if (!videoRef.current) return;
+  
+    const currentTime = videoRef.current.currentTime;
+
+    const displayedEvents = events.filter(
+      (event) => {
+        const eventEndedTime = event.timestamp + event.duration;
+        return currentTime >= event.timestamp && currentTime <= eventEndedTime
+      }
+    );
+
+    setDisplayedEvents(displayedEvents);
+  }, [events]);
+
   useEffect(() => {
-    if (videoRef.current) {
+    if (!videoRef.current) return;
       videoRef.current.currentTime = playerCurrentTime;
-    }
-  }, [playerCurrentTime]);
+      onTimeUpdate();
+  }, [playerCurrentTime, onTimeUpdate]);
 
   const handleVideoClick = () => {
     if (!videoRef.current) return;
@@ -39,11 +56,24 @@ export const Player: React.FC<Props> = () => {
       <video
         onAuxClickCapture={handleVideoClick}
         height={VIDEO_PLAYER_HEIGHT}
+        onTimeUpdate={onTimeUpdate}
         width={VIDEO_PLAYER_WIDTH}
         src={VIDEO_URL_SRC}
         controls={true}
         ref={videoRef}
       />
+      {displayedEvents.map((event) => (
+        <div
+          className={css.eventRectangle}
+          key={event.timestamp}
+          style={{
+            height: event.zone.height,
+            width: event.zone.width,
+            left: event.zone.left,
+            top: event.zone.top,
+          }}
+        />
+      ))}
     </div>
   )
 }

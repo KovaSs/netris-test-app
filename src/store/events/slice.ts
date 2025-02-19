@@ -25,7 +25,7 @@ const authSlice = createSlice({
     builder.addCase(
       getEventsAsyncThunk.fulfilled,
       (state, action: PayloadAction<Event[]>) => {
-        state.list = action.payload;
+        state.list = action.payload.sort((a, b) => a.timestamp - b.timestamp);
         state.loadStatus = LoadStatuses.LOADED;
       }
     );

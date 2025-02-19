@@ -7,3 +7,9 @@
   height: 720px;
   width: 1280px;
 }
+
+.eventRectangle {
+  position: absolute;
+  background-color: #00800073;
+  border: 1px solid #00800073;
+}
