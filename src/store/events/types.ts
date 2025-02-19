@@ -1,3 +1,5 @@
+import { LoadStatuses } from "constants/LoadStatuses";
+
 export interface Event {
   timestamp: number;
   duration: number;
@@ -10,6 +12,6 @@ export interface Event {
 }
 
 export interface EventsState {
-  pending: boolean;
+  loadStatus: LoadStatuses;
   list: Event[];
 };
