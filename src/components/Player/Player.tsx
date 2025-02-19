@@ -58,12 +58,14 @@ export const Player: React.FC<Props> = ({ events }) => {
         height={VIDEO_PLAYER_HEIGHT}
         onTimeUpdate={onTimeUpdate}
         width={VIDEO_PLAYER_WIDTH}
+        data-testid="player"
         src={VIDEO_URL_SRC}
         controls={true}
         ref={videoRef}
       />
       {displayedEvents.map((event) => (
         <div
+          data-testid={`rectangle-event-${event.timestamp}`}
           className={css.eventRectangle}
           key={event.timestamp}
           style={{
