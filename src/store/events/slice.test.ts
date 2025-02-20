@@ -1,4 +1,5 @@
 import { LoadStatuses } from "constants/LoadStatuses";
+import eventsMock from "api/events.mock.json";
 
 import { eventsReducer, EventsActions } from './slice';
 import type { EventsState } from "./types";
@@ -9,28 +10,7 @@ describe('Events reducer', () => {
     list: [],
   };
 
-  const events = [
-    {
-      duration: 5000,
-      timestamp: 0,
-      zone: {
-        height: 0,
-        width: 0,
-        left: 0,
-        top: 0,
-      },
-    },
-    {
-      duration: 5000,
-      timestamp: 1,
-      zone: {
-        height: 0,
-        width: 0,
-        left: 0,
-        top: 0,
-      },
-    },
-  ];
+  const events = eventsMock;
 
   it('При инициализации редюсер должен иметь стартовую структуру', () => {
     expect(eventsReducer(undefined, { type: 'unknown' })).toEqual(initialState);

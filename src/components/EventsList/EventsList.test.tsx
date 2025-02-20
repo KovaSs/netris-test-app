@@ -1,18 +1,13 @@
 import { screen } from "@testing-library/react";
 
+import eventsMock from 'api/events.mock.json';
 import { renderWithReduxStore } from 'utils';
-import { EventTypes } from "store/events";
 
 import { EventsList } from "./EventsList";
 
 
 describe("EventsList", () => {
-  const events = [
-    { timestamp: 0 },
-    { timestamp: 1 },
-    { timestamp: 2 },
-    { timestamp: 3 },
-  ] as EventTypes.Event[];
+  const events = eventsMock;
 
   jest.mock("react-redux", () => ({
     useSelector: jest.fn(),

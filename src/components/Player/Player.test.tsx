@@ -1,5 +1,6 @@
 import { fireEvent, screen, waitFor } from "@testing-library/react";
 
+import eventsMock from 'api/events.mock.json';
 import { renderWithReduxStore } from 'utils';
 
 import { Player } from "./Player";
@@ -27,31 +28,10 @@ describe("Player", () => {
     useDispatch: () => jest.fn(),
   }));
 
-  const events = [
-    {
-      duration: 5000,
-      timestamp: firstEventTimestamp,
-      zone: {
-        height: 0,
-        width: 0,
-        left: 0,
-        top: 0,
-      },
-    },
-    {
-      duration: 5000,
-      timestamp: secondEventTimestamp,
-      zone: {
-        height: 0,
-        width: 0,
-        left: 0,
-        top: 0,
-      },
-    },
-  ];
+  const events = eventsMock;
 
   it("Компонент плеера отображается", async () => {
-    renderWithReduxStore(<Player events={events} />)
+    renderWithReduxStore(<Player src="https://test.ru" events={events} />)
 
     await waitFor(() => {
       const videoPlayer = screen.getByTestId('player');
@@ -60,7 +40,7 @@ describe("Player", () => {
   });
 
   it('По клику видео воспроизводится/приостанавливается', async () => {
-    renderWithReduxStore(<Player events={events} />)
+    renderWithReduxStore(<Player src="https://test.ru" events={events} />)
 
     const videoPlayer = screen.getByTestId('player') as HTMLVideoElement;
     videoPlayer.pause();
@@ -79,7 +59,7 @@ describe("Player", () => {
   });
 
   it('При совпадении currentTime player и ивента отображается прямоугольник на странице', async () => {
-    renderWithReduxStore(<Player events={events} />)
+    renderWithReduxStore(<Player src="https://test.ru" events={events} />)
 
     const rectangle = screen.queryByTestId(`rectangle-event-${firstEventTimestamp}`) as HTMLVideoElement;
 
@@ -89,7 +69,7 @@ describe("Player", () => {
   });
 
   it('При не совпадении currentTime player и ивента не отображается прямоугольник на странице', async () => {
-    renderWithReduxStore(<Player events={events} />)
+    renderWithReduxStore(<Player src="https://test.ru" events={events} />)
 
     const rectangle = screen.queryByTestId(`rectangle-event-${secondEventTimestamp}`) as HTMLVideoElement;
 
