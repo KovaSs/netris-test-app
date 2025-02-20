@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
-import { PlayerState } from "./types";
+import type { PlayerState } from "./types";
 
 export const moduleName = "player";
 
