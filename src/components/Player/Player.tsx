@@ -53,7 +53,9 @@ export const Player: React.FC<Props> = ({ events, src }) => {
   };
 
   const renderPlayerControls = () => {
-    if (videoRef.current && videoRef.current.paused) return <MdOutlinePlayCircle className={css.playerControls} />;
+    if (videoRef.current && (videoRef.current.ended || videoRef.current.paused)) {
+      return <MdOutlinePlayCircle className={css.playerControls} />;
+    }
     return <MdOutlinePauseCircle className={css.playerControls} />
   }
 
