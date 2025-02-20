@@ -9,6 +9,8 @@ import { Player } from 'components/Player';
 
 import css from './styles.module.css';
 
+const VIDEO_URL_SRC = 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4';
+
 export const MainPage: React.FC = () => {
   const getEvents = useReduxActions(EventsActions.getEvents);
 
@@ -26,7 +28,7 @@ export const MainPage: React.FC = () => {
 
     return (
       <div className={css.mediaContainer}>
-        <Player events={events} />
+        <Player src={VIDEO_URL_SRC} events={events} />
         <EventsList events={events} />
       </div>
     );

@@ -8,7 +8,7 @@ const initialState: PlayerState = {
   currentTime: 0,
 };
 
-const videoSlice = createSlice({
+const playerSlice = createSlice({
   name: moduleName,
   initialState,
   reducers: {
@@ -21,5 +21,5 @@ const videoSlice = createSlice({
   },
 });
 
-export const PlayerActions = videoSlice.actions;
-export const playerReducer = videoSlice.reducer;
+export const PlayerActions = playerSlice.actions;
+export const playerReducer = playerSlice.reducer;

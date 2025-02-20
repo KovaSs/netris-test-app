@@ -7,15 +7,15 @@ import { PlayerSelectors } from 'store/player';
 
 import css from './styles.module.css';
 
-const VIDEO_URL_SRC = 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4';
 const VIDEO_PLAYER_WIDTH = 1280;
 const VIDEO_PLAYER_HEIGHT = 720;
 
 interface Props {
   events: EventTypes.Event[];
+  src: string;
 };
 
-export const Player: React.FC<Props> = ({ events }) => {
+export const Player: React.FC<Props> = ({ events, src }) => {
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
   const playerCurrentTime = useSelector(PlayerSelectors.getPlayerCurrentTime);
@@ -67,9 +67,9 @@ export const Player: React.FC<Props> = ({ events }) => {
         width={VIDEO_PLAYER_WIDTH}
         className={css.player}
         data-testid="player"
-        src={VIDEO_URL_SRC}
         controls={false}
         ref={videoRef}
+        src={src}
       />
       {displayedEvents.map((event) => (
         <div
