@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSelector } from "react-redux";
 
-import { getEventsAsyncThunk, EventsSelectors } from 'store/events';
+import { EventsActions, EventsSelectors } from 'store/events';
 import { LoadStatuses } from 'constants/LoadStatuses';
 import { EventsList } from 'components/EventsList';
 import { useReduxActions } from 'store/utils';
@@ -10,7 +10,7 @@ import { Player } from 'components/Player';
 import css from './styles.module.css';
 
 export const MainPage: React.FC = () => {
-  const getEvents = useReduxActions(getEventsAsyncThunk);
+  const getEvents = useReduxActions(EventsActions.getEvents);
 
   const { list: events, loadStatus } = useSelector(EventsSelectors.getEventsState);
 
