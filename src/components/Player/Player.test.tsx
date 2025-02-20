@@ -1,7 +1,6 @@
-import { render, fireEvent, screen, waitFor } from "@testing-library/react";
-import { Provider } from 'react-redux';
+import { fireEvent, screen, waitFor } from "@testing-library/react";
 
-import { store } from "store";
+import { renderWithReduxStore } from 'utils';
 
 import { Player } from "./Player";
 
@@ -52,11 +51,7 @@ describe("Player", () => {
   ];
 
   it("Компонент плеера отображается", async () => {
-    render(
-      <Provider store={store}>
-        <Player events={events} />
-      </Provider>
-    );
+    renderWithReduxStore(<Player events={events} />)
 
     await waitFor(() => {
       const videoPlayer = screen.getByTestId('player');
@@ -65,11 +60,7 @@ describe("Player", () => {
   });
 
   it('По клику видео воспроизводится/приостанавливается', async () => {
-    render(
-      <Provider store={store}>
-        <Player events={events} />
-      </Provider>
-    );
+    renderWithReduxStore(<Player events={events} />)
 
     const videoPlayer = screen.getByTestId('player') as HTMLVideoElement;
     videoPlayer.pause();
@@ -88,11 +79,7 @@ describe("Player", () => {
   });
 
   it('При совпадении currentTime player и ивента отображается прямоугольник на странице', async () => {
-    render(
-      <Provider store={store}>
-        <Player events={events} />
-      </Provider>
-    );
+    renderWithReduxStore(<Player events={events} />)
 
     const rectangle = screen.queryByTestId(`rectangle-event-${firstEventTimestamp}`) as HTMLVideoElement;
 
@@ -102,11 +89,7 @@ describe("Player", () => {
   });
 
   it('При не совпадении currentTime player и ивента не отображается прямоугольник на странице', async () => {
-    render(
-      <Provider store={store}>
-        <Player events={events} />
-      </Provider>
-    );
+    renderWithReduxStore(<Player events={events} />)
 
     const rectangle = screen.queryByTestId(`rectangle-event-${secondEventTimestamp}`) as HTMLVideoElement;
 

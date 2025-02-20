@@ -12,6 +12,7 @@ interface Props {
 export const EventItem: React.FC<Props> = ({ timestamp, onClick }) => {
   return (
     <button 
+      data-testid={`event-item-${timestamp}`}
       onClick={() => onClick(timestamp)}
       className={css.eventItem}
     >

@@ -1,16 +1,17 @@
-import { render, screen } from "@testing-library/react";
-import { Provider } from 'react-redux';
+import { screen } from "@testing-library/react";
 
+import { renderWithReduxStore } from 'utils';
 import { EventTypes } from "store/events";
-import { store } from "store";
 
 import { EventsList } from "./EventsList";
+
 
 describe("EventsList", () => {
   const events = [
     { timestamp: 0 },
-    { timestamp: 100 },
-    { timestamp: 200 },
+    { timestamp: 1 },
+    { timestamp: 2 },
+    { timestamp: 3 },
   ] as EventTypes.Event[];
 
   jest.mock("react-redux", () => ({
@@ -19,22 +20,17 @@ describe("EventsList", () => {
   }));
 
   it("При наличии ивентов рендерится список", () => {
-    render(
-      <Provider store={store}>
-        <EventsList events={events} />
-      </Provider>
-    );
+    renderWithReduxStore(<EventsList events={events} />)
 
     const eventsContainer = screen.getByTestId('events-list-container');
     expect(eventsContainer).toBeInTheDocument();
+
+    const eventItems = screen.getAllByTestId(/^event-item-/);
+    expect(eventItems.length).toBe(events.length);
   });
 
   it("При отсутствии ивентов отображается сообщение об их отсутствии", () => {
-    render(
-      <Provider store={store}>
-        <EventsList events={[]} />
-      </Provider>
-    );
+    renderWithReduxStore(<EventsList events={[]} />);
 
     const eventsContainer = screen.getByText('Событий нет');
     expect(eventsContainer).toBeInTheDocument();
