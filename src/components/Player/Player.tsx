@@ -1,4 +1,5 @@
 import React, { useRef, useEffect, useCallback, useState } from 'react';
+import { MdOutlinePlayCircle, MdOutlinePauseCircle } from "react-icons/md";
 import { useSelector } from "react-redux";
 
 import type { EventTypes } from 'store/events';
@@ -51,16 +52,23 @@ export const Player: React.FC<Props> = ({ events }) => {
     }
   };
 
+  const renderPlayerControls = () => {
+    if (videoRef.current && videoRef.current.paused) return <MdOutlinePlayCircle className={css.playerControls} />;
+    return <MdOutlinePauseCircle className={css.playerControls} />
+  }
+
   return (
     <div className={css.playerContainer}>
+      {renderPlayerControls()}
       <video
-        onAuxClickCapture={handleVideoClick}
         height={VIDEO_PLAYER_HEIGHT}
         onTimeUpdate={onTimeUpdate}
+        onClick={handleVideoClick}
         width={VIDEO_PLAYER_WIDTH}
+        className={css.player}
         data-testid="player"
         src={VIDEO_URL_SRC}
-        controls={true}
+        controls={false}
         ref={videoRef}
       />
       {displayedEvents.map((event) => (

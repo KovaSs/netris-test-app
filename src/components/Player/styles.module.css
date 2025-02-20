@@ -13,3 +13,24 @@
   background-color: #00800073;
   border: 1px solid #00800073;
 }
+
+.player {
+  background-color: black;
+  cursor: pointer;
+}
+
+.playerContainer:hover .playerControls {
+  opacity: 1;
+}
+
+.playerControls {
+  transform: translate(-50%, -50%);
+  transition: all 0.5s ease-out;
+  position: absolute;
+  height: 100px;
+  width: 100px;
+  fill: white;
+  opacity: 0;
+  left: 50%;
+  top: 50%;
+}
