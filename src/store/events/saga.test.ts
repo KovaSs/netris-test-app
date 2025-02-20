@@ -1,4 +1,4 @@
-import type { AnyAction } from '@reduxjs/toolkit';
+import type { UnknownAction } from '@reduxjs/toolkit';
 import { runSaga } from 'redux-saga';
 
 import { requestSuccessful, requestFailure } from "utils/testUtils/apiRequests";
@@ -7,26 +7,27 @@ import eventsMock from "api/events.mock.json";
 
 import { getEventsAsync } from './saga';
 import { EventsActions } from './slice';
+import { Event } from './types';
 
 describe('Events saga', () => {
   it('Запрос списка ивентов', async () => {
-    const dispatchedActions: AnyAction[] = [];
+    const dispatchedActions: UnknownAction[] = [];
     const fakeStore = {
       getState: () => ({ list: [], loadStatus: LoadStatuses.UNKNOWN }),
-      dispatch: (action: AnyAction) => dispatchedActions.push(action),
+      dispatch: (action: UnknownAction) => dispatchedActions.push(action),
     };
 
-    requestSuccessful(eventsMock);
+    requestSuccessful<Event[]>(eventsMock);
 
     await runSaga(fakeStore, getEventsAsync).toPromise();
     expect(dispatchedActions).toContainEqual(EventsActions.getEventsLoaded(eventsMock));
   });
 
   it('Ошибка запроса списка ивентов', async () => {
-    const dispatchedActions: AnyAction[] = [];
+    const dispatchedActions: UnknownAction[] = [];
     const fakeStore = {
       getState: () => ({ list: [], loadStatus: LoadStatuses.UNKNOWN }),
-      dispatch: (action: AnyAction) => dispatchedActions.push(action),
+      dispatch: (action: UnknownAction) => dispatchedActions.push(action),
     };
 
     requestFailure();
